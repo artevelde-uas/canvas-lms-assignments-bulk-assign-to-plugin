@@ -1,0 +1,23 @@
+{
+  "name": "@artevelde-uas/canvas-lms-assignments-bulk-assign-to-plugin",
+  "version": "0.1.0",
+  "description": "Add an option to bulk assign users to an assignment",
+  "keywords": [
+    "Canvas LMS"
+  ],
+  "license": "ISC",
+  "author": "Renaat De Muynck <renaat.demuynck@arteveldehs.be>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artevelde-uas/canvas-lms-assignments-bulk-assign-to-plugin.git"
+  },
+  "module": "src/index.js",
+  "files": [
+    "src/",
+    "locales/",
+    "docs/"
+  ],
+  "peerDependencies": {
+    "@artevelde-uas/canvas-lms-app": "^1.0.0"
+  }
+}
