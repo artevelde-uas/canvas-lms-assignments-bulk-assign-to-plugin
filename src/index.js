@@ -5,21 +5,21 @@ import styles from './index.module.css';
 
 export default function () {
     router.onRoute(['courses.assignments.new', 'courses.assignments.edit'], async (params, routeName) => {
-        let saveButton = await dom.onElementReady('.assignment__action-buttons button[type="submit"].btn-primary');
-        let savePublishButton = await dom.onElementReady('.assignment__action-buttons button.save_and_publish');
+        const saveButton = await dom.onElementReady('.assignment__action-buttons button[type="submit"].btn-primary');
+        const savePublishButton = await dom.onElementReady('.assignment__action-buttons button.save_and_publish');
 
         [saveButton, savePublishButton].forEach(element => {
             element.addEventListener('click', event => {
-                let isBulkAssignment = document.getElementById(styles.bulkAssignment).checked;
+                const isBulkAssignment = document.getElementById(styles.bulkAssignment).checked;
 
                 // Stop if not in bulk assignment mode
                 if (!isBulkAssignment) return;
 
-                let rows = document.querySelectorAll('.Container__DueDateRow-item');
+                const rows = document.querySelectorAll('.Container__DueDateRow-item');
 
                 // Check if user list is valid
-                let isValid = Array.from(rows).every(row => {
-                    let invalidItems = row.querySelectorAll(`.${styles.bulkInputWrapper} > textarea + div > .${styles.invalid}`);
+                const isValid = Array.from(rows).every(row => {
+                    const invalidItems = row.querySelectorAll(`.${styles.bulkInputWrapper} > textarea + div > .${styles.invalid}`);
 
                     return (invalidItems.length === 0);
                 });
@@ -36,7 +36,7 @@ export default function () {
 
                 // Delete all current tokens
                 rows.forEach(row => {
-                    let tokenDeleteButton = row.querySelector('.ic-token-delete-button');
+                    const tokenDeleteButton = row.querySelector('.ic-token-delete-button');
 
                     while (tokenDeleteButton !== null) {
                         tokenDeleteButton.click();
@@ -48,12 +48,12 @@ export default function () {
                 rows.forEach((row, key) => {
                     // Add 'Everyone else' to the first row to prevent warning
                     if (key === 0) {
-                        let option = row.querySelector('.ic-tokeninput-list > .ic-tokeninput-header[value="course_section"] + .ic-tokeninput-option');
+                        const option = row.querySelector('.ic-tokeninput-list > .ic-tokeninput-header[value="course_section"] + .ic-tokeninput-option');
 
                         option.click();
                     }
 
-                    let option = row.querySelector('.ic-tokeninput-list > .ic-tokeninput-header[value="student"] + .ic-tokeninput-option');
+                    const option = row.querySelector('.ic-tokeninput-list > .ic-tokeninput-header[value="student"] + .ic-tokeninput-option');
 
                     option.click();
                 });
@@ -75,20 +75,20 @@ export default function () {
                 <div class="form-column-left"></div>
             `);
 
-            let bulkAssignment = document.getElementById(styles.bulkAssignment);
+            const bulkAssignment = document.getElementById(styles.bulkAssignment);
 
             bulkAssignment.addEventListener('change', event => {
                 overridesColumnRight.classList.toggle(styles.bulk, event.target.checked);
             });
         }, { once: true });
 
-        let courseStudents = await api.get(`/courses/${params.courseId}/users`, {
+        const courseStudents = await api.get(`/courses/${params.courseId}/users`, {
             per_page: 100,
             enrollment_type: 'student'
         });
 
         dom.onElementAdded('.Container__DueDateRow-item', dueDateRow => {
-            let icTokens = dueDateRow.querySelector('#assign-to-label + div');
+            const icTokens = dueDateRow.querySelector('#assign-to-label + div');
 
             icTokens.insertAdjacentHTML('afterend', `
                 <div class="${styles.bulkInputWrapper}">
@@ -98,32 +98,32 @@ export default function () {
             `);
 
             function getTop(element) {
-                let elementStyles = getComputedStyle(element);
-                let paddingTop = Number.parseInt(elementStyles.paddingTop);
-                let borderTopWidth = Number.parseInt(elementStyles.borderTopWidth);
+                const elementStyles = getComputedStyle(element);
+                const paddingTop = Number.parseInt(elementStyles.paddingTop);
+                const borderTopWidth = Number.parseInt(elementStyles.borderTopWidth);
 
                 return (paddingTop + borderTopWidth) - element.scrollTop;
             }
 
             function getLeft(element) {
-                let elementStyles = getComputedStyle(element);
-                let paddingLeft = Number.parseInt(elementStyles.paddingLeft);
-                let borderLeftWidth = Number.parseInt(elementStyles.borderLeftWidth);
+                const elementStyles = getComputedStyle(element);
+                const paddingLeft = Number.parseInt(elementStyles.paddingLeft);
+                const borderLeftWidth = Number.parseInt(elementStyles.borderLeftWidth);
 
                 return paddingLeft + borderLeftWidth;
             }
 
             function getWidth(element) {
-                let elementStyles = getComputedStyle(element);
-                let paddingLeft = Number.parseInt(elementStyles.paddingLeft);
-                let paddingRight = Number.parseInt(elementStyles.paddingRight);
+                const elementStyles = getComputedStyle(element);
+                const paddingLeft = Number.parseInt(elementStyles.paddingLeft);
+                const paddingRight = Number.parseInt(elementStyles.paddingRight);
 
                 return element.clientWidth - (paddingLeft + paddingRight);
             }
 
-            let bulkInputWrapper = dueDateRow.querySelector(`.${styles.bulkInputWrapper}`);
-            let bulkInput = bulkInputWrapper.querySelector(`textarea`);
-            let bulkInputBackground = bulkInputWrapper.querySelector(`textarea + div`);
+            const bulkInputWrapper = dueDateRow.querySelector(`.${styles.bulkInputWrapper}`);
+            const bulkInput = bulkInputWrapper.querySelector(`textarea`);
+            const bulkInputBackground = bulkInputWrapper.querySelector(`textarea + div`);
 
             bulkInputBackground.style.top = `${getTop(bulkInput)}px`;
             bulkInputBackground.style.left = `${getLeft(bulkInput)}px`;
@@ -132,20 +132,20 @@ export default function () {
             function findUser(value) {
                 return courseStudents.find(student => {
                     return (value === student.email ||
-                            value === student.login_id ||
-                            value === student.sis_user_id);
+                        value === student.login_id ||
+                        value === student.sis_user_id);
                 });
             }
 
             bulkInput.addEventListener('input', event => {
-                let values = bulkInput.value.split(/\n/);
+                const values = bulkInput.value.split(/\n/);
 
                 bulkInputBackground.innerHTML = '';
 
                 values.forEach(value => {
-                    let user = findUser(value);
-                    let isValid = (user !== undefined);
-                    let isEmpty = (value === '');
+                    const user = findUser(value);
+                    const isValid = (user !== undefined);
+                    const isEmpty = (value === '');
 
                     bulkInputBackground.insertAdjacentHTML('beforeend', `
                         <div class="${(!isValid && !isEmpty) ? styles.invalid : ''}" ${isValid ? `data-user-id="${user.id}"` : ''}>
@@ -167,9 +167,9 @@ export default function () {
             });
 
             bulkInput.addEventListener('mousemove', event => {
-                let elements = document.elementsFromPoint(event.clientX, event.clientY);
-                let currentHover = bulkInputWrapper.querySelector(`span.${styles.hover}`);
-                let newHover = elements.find(element => element.matches(`.${styles.bulkInputWrapper} > textarea + div > div > span`));
+                const elements = document.elementsFromPoint(event.clientX, event.clientY);
+                const currentHover = bulkInputWrapper.querySelector(`span.${styles.hover}`);
+                const newHover = elements.find(element => element.matches(`.${styles.bulkInputWrapper} > textarea + div > div > span`));
 
                 if (currentHover !== null) {
                     bulkInput.title = '';
@@ -183,7 +183,7 @@ export default function () {
             });
 
             bulkInput.addEventListener('mouseleave', event => {
-                let currentHover = bulkInputWrapper.querySelector(`span.${styles.hover}`);
+                const currentHover = bulkInputWrapper.querySelector(`span.${styles.hover}`);
 
                 if (currentHover !== null) {
                     bulkInput.title = '';
@@ -198,7 +198,7 @@ export default function () {
          * @param {object} assignment The assignment object
          */
         function customSend(body) {
-            let assignment = JSON.parse(body).assignment;
+            const assignment = JSON.parse(body).assignment;
 
             // Clear the default settings
             assignment.only_visible_to_overrides = true;
@@ -208,9 +208,9 @@ export default function () {
 
             // Overwrite the student ids with the ones from the bulk lists
             assignment.assignment_overrides.forEach(override => {
-                let row = document.querySelector(`.Container__DueDateRow-item[data-row-key="${override.rowKey}"]`);
-                let items = row.querySelectorAll(`.${styles.bulkInputWrapper} > textarea + div [data-user-id]`);
-                let userIds = Array.from(items).map(item => item.dataset.userId);
+                const row = document.querySelector(`.Container__DueDateRow-item[data-row-key="${override.rowKey}"]`);
+                const items = row.querySelectorAll(`.${styles.bulkInputWrapper} > textarea + div [data-user-id]`);
+                const userIds = Array.from(items).map(item => item.dataset.userId);
 
                 override.student_ids = userIds;
             });
@@ -219,17 +219,17 @@ export default function () {
         }
 
         // Store the native open method as it will be overwritten later
-        let originalOpen = XMLHttpRequest.prototype.open;
+        const originalOpen = XMLHttpRequest.prototype.open;
 
         // Override the native open method to check for posts of new assignments
         XMLHttpRequest.prototype.open = function (method, url) {
-            let isBulkAssignment = document.getElementById(styles.bulkAssignment).checked;
-            let isNewAssignment = (
+            const isBulkAssignment = document.getElementById(styles.bulkAssignment).checked;
+            const isNewAssignment = (
                 routeName === 'courses.assignments.new' &&
                 method === 'POST' &&
                 url === `${window.location.origin}/api/v1/courses/${params.courseId}/assignments`
             );
-            let isEditAssignment = (
+            const isEditAssignment = (
                 routeName === 'courses.assignments.edit' &&
                 method === 'PUT' &&
                 url === `${window.location.origin}/api/v1/courses/${params.courseId}/assignments/${params.assignmentId}`
