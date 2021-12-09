@@ -1,59 +1,75 @@
+#bulk-assignment {
+}
 
-#bulk-assignment {}
-
-.bulk-overrides-row :global(.border-round) {
+.bulk-overrides-row {
+  & :global(.border-round) {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) :global(.ContainerDueDate) {
-    margin-top: 0;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) :global(#bordered-wrapper) {
-    border-top-style: none;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-}
+  }
 
-.bulk-overrides-row ~ :global(.overrides-column-right).bulk :global(.Container__DueDateRow-item) :global(#assign-to-label) + div {
-    display: none;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper {
-    display: none;
-    position: relative;
-    width: 100%;
-    height: 200px;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right).bulk .bulk-input-wrapper {
-    display: block;
-    overflow: hidden;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea,
-.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea + div {
-    box-sizing: border-box;
-    position: absolute;
-    font-size: .875rem;
-    line-height: 20px;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea {
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    color: transparent;
-    caret-color: black;
-    background-color: transparent;
-    resize: none;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea + div {
-    overflow-x: hidden;
-    overflow-y: auto;
-    word-wrap: anywhere;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea + div > div {
-    min-height: 20px;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea + div > div.invalid > span {
-    color: red;
-}
-.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea + div > div > span.hover {
-    text-decoration: underline;
+  & ~ :global(.overrides-column-right) {
+    & :global(.ContainerDueDate) {
+      margin-top: 0;
+    }
+
+    & :global(#bordered-wrapper) {
+      border-top-style: none;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+
+    &.bulk :global(.Container__DueDateRow-item) :global(#assign-to-label) + div {
+      display: none;
+    }
+
+    &.bulk .bulk-input-wrapper {
+      display: block;
+      overflow: hidden;
+    }
+
+    & .bulk-input-wrapper {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
+
+    & .bulk-input-wrapper > textarea {
+      & {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        color: transparent;
+        caret-color: black;
+        background-color: transparent;
+        resize: none;
+      }
+
+      &,
+      & + div {
+        box-sizing: border-box;
+        position: absolute;
+        font-size: .875rem;
+        line-height: 20px;
+      }
+
+      & + div {
+        overflow-x: hidden;
+        overflow-y: auto;
+        word-wrap: anywhere;
+
+        & > div {
+          min-height: 20px;
+
+          & > span.hover {
+            text-decoration: underline;
+          }
+
+          &.invalid > span {
+            color: red;
+          }
+        }
+      }
+    }
+  }
 }
