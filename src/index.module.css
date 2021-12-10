@@ -54,6 +54,9 @@
 .bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea + div > div.invalid > span {
     color: red;
 }
+.bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea + div > div > span {
+    white-space: pre;
+}
 .bulk-overrides-row ~ :global(.overrides-column-right) .bulk-input-wrapper > textarea + div > div > span.hover {
     text-decoration: underline;
 }
