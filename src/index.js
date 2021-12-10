@@ -61,6 +61,7 @@ export default function () {
             }, { useCapture: true });
         });
 
+        // Add a 'Bulk assignment' checkbox before 'Assign to' blocks
         dom.onElementAdded('.overrides-column-right', overridesColumnRight => {
             overridesColumnRight.insertAdjacentHTML('beforebegin', `
                 <div class="form-column-right ${styles.bulkOverridesRow}">
@@ -77,19 +78,23 @@ export default function () {
 
             const bulkAssignment = document.getElementById(styles.bulkAssignment);
 
+            // Set 'bulk' class to container reflecting checkbox state
             bulkAssignment.addEventListener('change', event => {
                 overridesColumnRight.classList.toggle(styles.bulk, event.target.checked);
             });
         }, { once: true });
 
+        // Get the currently enrolled students from the course
         const courseStudents = await api.get(`/courses/${params.courseId}/users`, {
             per_page: 100,
             enrollment_type: 'student'
         });
 
+        // Add a text field to newly created due date block
         dom.onElementAdded('.Container__DueDateRow-item', dueDateRow => {
             const icTokens = dueDateRow.querySelector('#assign-to-label + div');
 
+            // Render the textarea and background element
             icTokens.insertAdjacentHTML('afterend', `
                 <div class="${styles.bulkInputWrapper}">
                     <textarea></textarea>
@@ -97,6 +102,12 @@ export default function () {
                 </div>
             `);
 
+            /**
+             * Gets the element's top offset
+             * 
+             * @param {HTMLElement} element The element
+             * @returns {number} The element's top offset in pixels
+             */
             function getTop(element) {
                 const elementStyles = getComputedStyle(element);
                 const paddingTop = Number.parseInt(elementStyles.paddingTop);
@@ -105,6 +116,12 @@ export default function () {
                 return (paddingTop + borderTopWidth) - element.scrollTop;
             }
 
+            /**
+             * Gets the element's left offset
+             * 
+             * @param {HTMLElement} element The element
+             * @returns {number} The element's left offset in pixels
+             */
             function getLeft(element) {
                 const elementStyles = getComputedStyle(element);
                 const paddingLeft = Number.parseInt(elementStyles.paddingLeft);
@@ -113,6 +130,12 @@ export default function () {
                 return paddingLeft + borderLeftWidth;
             }
 
+            /**
+             * Gets the element's inner width
+             * 
+             * @param {HTMLElement} element The element
+             * @returns {number} The element's inner width in pixels
+             */
             function getWidth(element) {
                 const elementStyles = getComputedStyle(element);
                 const paddingLeft = Number.parseInt(elementStyles.paddingLeft);
@@ -121,14 +144,23 @@ export default function () {
                 return element.clientWidth - (paddingLeft + paddingRight);
             }
 
+            // Get references to the textarea and background element
             const bulkInputWrapper = dueDateRow.querySelector(`.${styles.bulkInputWrapper}`);
             const bulkInput = bulkInputWrapper.querySelector(`textarea`);
             const bulkInputBackground = bulkInputWrapper.querySelector(`textarea + div`);
 
+            // Set the correct dimensions to the background element
             bulkInputBackground.style.top = `${getTop(bulkInput)}px`;
             bulkInputBackground.style.left = `${getLeft(bulkInput)}px`;
             bulkInputBackground.style.width = `${getWidth(bulkInput)}px`;
 
+            /**
+             * Finds a student based on one of a user's unique identifiers
+             * (Can be one of: email, login ID or SIS ID)
+             * 
+             * @param {string} value A stundent's unique id
+             * @returns {object} A user object
+             */
             function findUser(value) {
                 return courseStudents.find(student => {
                     return (value === student.email ||
@@ -137,12 +169,16 @@ export default function () {
                 });
             }
 
+            // Update the background element on each key input
             bulkInput.addEventListener('input', event => {
+                // Get the values of each row
                 const values = bulkInput.value.split(/\n/);
 
                 bulkInputBackground.innerHTML = '';
 
+                // Render row for each user
                 values.forEach(value => {
+                    // Find the user based on the row value
                     const user = findUser(value);
                     const isValid = (user !== undefined);
                     const isEmpty = (value === '');
@@ -154,37 +190,49 @@ export default function () {
                     `);
                 });
 
+                // Recalculate position and size
                 bulkInputBackground.style.top = `${getTop(bulkInput)}px`;
                 bulkInputBackground.style.width = `${getWidth(bulkInput)}px`;
             });
 
+            // Synchronize background with testarea scroll position
             bulkInput.addEventListener('scroll', event => {
                 bulkInputBackground.style.top = `${getTop(bulkInput)}px`;
             });
 
+            // Prevent key stroke events from bubbling up
             bulkInput.addEventListener('keydown', event => {
                 event.stopPropagation();
             });
 
+            // Display a label with the current hovered student's name
             bulkInput.addEventListener('mousemove', event => {
+                // Find all the elements underneath the mouse cursor
                 const elements = document.elementsFromPoint(event.clientX, event.clientY);
+                // Find the span element that's currently set as 'hovered'
                 const currentHover = bulkInputWrapper.querySelector(`span.${styles.hover}`);
+                // Find the span element that's actually hovered over
                 const newHover = elements.find(element => element.matches(`.${styles.bulkInputWrapper} > textarea + div > div > span`));
 
+                // Remove the old hover label
                 if (currentHover !== null) {
                     bulkInput.title = '';
                     currentHover.classList.remove(styles.hover);
                 }
 
+                // Set the new hover label
                 if (newHover !== undefined) {
                     bulkInput.title = newHover.title;
                     newHover.classList.add(styles.hover);
                 }
             });
 
+            // Remove the label when the mouse moves away
             bulkInput.addEventListener('mouseleave', event => {
+                // Find the span element that's currently set as 'hovered'
                 const currentHover = bulkInputWrapper.querySelector(`span.${styles.hover}`);
 
+                // Remove the hover label
                 if (currentHover !== null) {
                     bulkInput.title = '';
                     currentHover.classList.remove(styles.hover);
