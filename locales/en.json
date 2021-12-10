@@ -1,5 +1,9 @@
 {
     "bulk_assignment": "Bulk assignment",
     "invalid_users_message": "There are some invalid users that need to be corrected or removed from one of the bulk lists",
-    "user_not_found": "User '{{user}}' not found"
+    "user_not_found": "User '{{user}}' not found",
+    "package": {
+        "title": "Bulk assign students to a assignments",
+        "description": "Adds an option to assign students in bulk to an assignment. Bulk lists can be made from one of a student's unique identifiers (email, login ID or SIS ID)"
+    }
 }
