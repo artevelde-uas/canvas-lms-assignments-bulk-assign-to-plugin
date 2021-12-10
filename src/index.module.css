@@ -61,8 +61,12 @@
         & > div {
           min-height: 20px;
 
-          & > span.hover {
-            text-decoration: underline;
+          & > span {
+            white-space: pre;
+
+            &.hover {
+              text-decoration: underline;
+            }
           }
 
           &.invalid > span {
