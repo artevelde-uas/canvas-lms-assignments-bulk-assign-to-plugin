@@ -1,4 +1,5 @@
 import { router, dom, api } from '@artevelde-uas/canvas-lms-app';
+import __ from './i18n';
 
 import styles from './index.module.css';
 
@@ -29,7 +30,7 @@ export default function () {
                     event.preventDefault();
                     event.stopPropagation();
 
-                    alert('There are some invalid users that need to be corrected or removed from one of the bulk lists');
+                    alert(__('invalid_users_message'));
 
                     return;
                 }
@@ -68,7 +69,7 @@ export default function () {
                     <div class="border border-trbl border-round">
                         <label class="checkbox flush">
                             <input type="checkbox" id="${styles.bulkAssignment}" />
-                            Bulk assignment
+                            ${__('bulk_assignment')}
                         </label>
                     </div>
                 </div>
@@ -185,7 +186,7 @@ export default function () {
 
                     bulkInputBackground.insertAdjacentHTML('beforeend', `
                         <div class="${(!isValid && !isEmpty) ? styles.invalid : ''}" ${isValid ? `data-user-id="${user.id}"` : ''}>
-                            <span ${!isEmpty ? `title="${isValid ? user.name : `User '${value}' not found`}"` : ''}>${value}</span>
+                            <span ${!isEmpty ? `title="${isValid ? user.name : __('user_not_found', { user: value })}"` : ''}>${value}</span>
                         </div>
                     `);
                 });

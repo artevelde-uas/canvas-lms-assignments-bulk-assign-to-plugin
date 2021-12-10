@@ -1,0 +1,5 @@
+{
+    "bulk_assignment": "Toewijzen in bulk",
+    "invalid_users_message": "Een aantal ongeldige gebruikers moeten worden aangepast of verwijderd van één of meer van de lijsten",
+    "user_not_found": "Gebruiker '{{user}}' niet gevonden"
+}

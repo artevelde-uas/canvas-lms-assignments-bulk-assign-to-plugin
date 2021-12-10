@@ -1,0 +1,5 @@
+{
+    "bulk_assignment": "Bulk assignment",
+    "invalid_users_message": "There are some invalid users that need to be corrected or removed from one of the bulk lists",
+    "user_not_found": "User '{{user}}' not found"
+}
