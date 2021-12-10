@@ -1,6 +1,3 @@
-#bulk-assignment {
-}
-
 .bulk-overrides-row {
   & :global(.border-round) {
     border-bottom-right-radius: 0;
