@@ -1,0 +1,9 @@
+{
+    "bulk_assignment": "Toewijzen in bulk",
+    "invalid_users_message": "Een aantal ongeldige gebruikers moeten worden aangepast of verwijderd van één of meer van de lijsten",
+    "user_not_found": "Gebruiker '{{user}}' niet gevonden",
+    "package": {
+        "title": "Studenten in bulk toe wijzen aan opdrachten",
+        "description": "Voegt een optie toe om studenten in bulk toe te wijzen aan een opdracht. Bulklijsten moeten één van de unieke gegevens van de student bevatten (e-mail, login-ID of SIS-ID)"
+    }
+}
