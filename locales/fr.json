@@ -1,0 +1,9 @@
+{
+    "bulk_assignment": "Affectation en masse",
+    "invalid_users_message": "Il y a des utilisateurs non valides qui doivent être corrigés ou supprimés de l'une des listes groupées",
+    "user_not_found": "Utilisateur '{{user}}' introuvable",
+    "package": {
+        "title": "Affecter des étudiants à des devoirs en masse",
+        "description": "Ajoute une option pour affecter plusieurs étudiants à un devoir en bloc. Des listes groupées peuvent être créées à partir de l'un des identifiants uniques d'un étudiant (e-mail, identifiant de connexion ou identifiant SIS)."
+    }
+}
