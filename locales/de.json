@@ -1,0 +1,9 @@
+{
+    "bulk_assignment": "Massenzuweisung",
+    "invalid_users_message": "Es gibt einige ungültige Benutzer, die korrigiert oder aus einer der Bulk-Listen entfernt werden müssen",
+    "user_not_found": "Benutzer '{{user}}' nicht gefunden",
+    "package": {
+        "title": "Weisen Sie Aufgaben gleichzeitig mehreren Schülern zu",
+        "description": "Fügt eine Option hinzu, um mehrere Schüler gleichzeitig einer Aufgabe zuzuweisen. Massenlisten können aus einer der eindeutigen Kennungen eines Schülers (E-Mail, Anmelde-ID oder SIS-ID) erstellt werden."
+    }
+}
