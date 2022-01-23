@@ -1,6 +1,6 @@
 {
   "name": "@artevelde-uas/canvas-lms-assignments-bulk-assign-to-plugin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Add an option to bulk assign users to an assignment",
   "keywords": [
     "Canvas LMS"
@@ -18,7 +18,7 @@
     "docs/"
   ],
   "peerDependencies": {
-    "@artevelde-uas/canvas-lms-app": "^1.0.0"
+    "@artevelde-uas/canvas-lms-app": "^1.9.0"
   },
   "config": {
     "scope": {
