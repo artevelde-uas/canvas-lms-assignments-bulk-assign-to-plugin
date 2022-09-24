@@ -87,7 +87,6 @@ export default function () {
 
         // Get the currently enrolled students from the course
         const courseStudents = await api.get(`/courses/${params.courseId}/users`, {
-            per_page: 100,
             enrollment_type: 'student'
         });
 
