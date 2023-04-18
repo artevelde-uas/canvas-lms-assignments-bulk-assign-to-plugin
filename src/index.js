@@ -1,5 +1,5 @@
 import { router, dom, api } from '@artevelde-uas/canvas-lms-app';
-import __ from './i18n';
+import t from './i18n';
 
 import styles from './index.module.css';
 
@@ -30,7 +30,7 @@ export default function () {
                     event.preventDefault();
                     event.stopPropagation();
 
-                    alert(__('invalid_users_message'));
+                    alert(t('invalid_users_message'));
 
                     return;
                 }
@@ -69,7 +69,7 @@ export default function () {
                     <div class="border border-trbl border-round">
                         <label class="checkbox flush">
                             <input type="checkbox" id="${styles.bulkAssignment}" />
-                            ${__('bulk_assignment')}
+                            ${t('bulk_assignment')}
                         </label>
                     </div>
                 </div>
@@ -185,7 +185,7 @@ export default function () {
 
                     bulkInputBackground.insertAdjacentHTML('beforeend', `
                         <div class="${(!isValid && !isEmpty) ? styles.invalid : ''}" ${isValid ? `data-user-id="${user.id}"` : ''}>
-                            <span ${!isEmpty ? `title="${isValid ? user.name : __('user_not_found', { user: value })}"` : ''}>${value}</span>
+                            <span ${!isEmpty ? `title="${isValid ? user.name : t('user_not_found', { user: value })}"` : ''}>${value}</span>
                         </div>
                     `);
                 });
@@ -296,7 +296,7 @@ export default function () {
 
     return {
         ...require('../package.json'),
-        title: __('package.title'),
-        description: __('package.description')
+        title: t('package.title'),
+        description: t('package.description')
     };
 }
